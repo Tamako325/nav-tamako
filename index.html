@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>小工具导航</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <a class="brand" href="./index.html" aria-label="小工具导航首页">
+          <span class="brand-mark">N</span>
+          <span>
+            <strong>小工具导航</strong>
+            <small>Tools Navigator</small>
+          </span>
+        </a>
+
+        <div class="search-wrap">
+          <i data-lucide="search" aria-hidden="true"></i>
+          <input id="searchInput" type="search" placeholder="搜索工具、标签或用途" autocomplete="off" />
+        </div>
+
+        <button class="icon-button" id="themeToggle" type="button" aria-label="切换主题">
+          <i data-lucide="moon"></i>
+        </button>
+      </header>
+
+      <div class="layout">
+        <aside class="sidebar" aria-label="工具分类">
+          <div class="side-title">分类</div>
+          <nav id="categoryNav" class="category-nav"></nav>
+        </aside>
+
+        <main class="content">
+          <section class="summary">
+            <div>
+              <p class="eyebrow">Toolkit</p>
+              <h1>常用小工具入口</h1>
+            </div>
+            <div class="stats" aria-label="工具统计">
+              <div>
+                <strong id="toolCount">0</strong>
+                <span>工具</span>
+              </div>
+              <div>
+                <strong id="categoryCount">0</strong>
+                <span>分类</span>
+              </div>
+              <div>
+                <strong id="favoriteCount">0</strong>
+                <span>收藏</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="controls" aria-label="筛选">
+            <div class="segmented" role="tablist" aria-label="显示范围">
+              <button class="segment active" type="button" data-filter="all">全部</button>
+              <button class="segment" type="button" data-filter="favorites">收藏</button>
+              <button class="segment" type="button" data-filter="empty">待补充</button>
+            </div>
+            <div class="active-meta" id="activeMeta">全部分类</div>
+          </section>
+
+          <div id="sections" class="sections"></div>
+
+          <section id="emptyState" class="empty-state" hidden>
+            <i data-lucide="folder-search" aria-hidden="true"></i>
+            <h2>没有匹配的工具</h2>
+            <p>换一个关键词或分类。</p>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="./assets/app.js"></script>
+  </body>
+</html>

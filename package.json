@@ -1,0 +1,10 @@
+{
+  "name": "tool-nav-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A static tools navigation website.",
+  "scripts": {
+    "start": "python -m http.server 4173",
+    "check": "node --check assets/app.js"
+  }
+}
