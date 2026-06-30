@@ -1,6 +1,6 @@
 :root {
   color-scheme: light;
-  --bg: #f7f8fa;
+  --bg: #ffffff;
   --surface: #ffffff;
   --surface-muted: #eef3f5;
   --text: #1c2430;
@@ -19,23 +19,6 @@
     Inter, "Segoe UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
 }
 
-body.dark {
-  color-scheme: dark;
-  --bg: #151716;
-  --surface: #1e2220;
-  --surface-muted: #252b28;
-  --text: #edf2ee;
-  --muted: #aab6af;
-  --line: #333b37;
-  --accent: #42b8a8;
-  --accent-strong: #7dd9cc;
-  --accent-soft: rgba(66, 184, 168, 0.15);
-  --warning: #f6b35d;
-  --warning-soft: rgba(246, 179, 93, 0.14);
-  --danger: #ff8a80;
-  --shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
-}
-
 * {
   box-sizing: border-box;
 }
@@ -48,9 +31,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background:
-    linear-gradient(180deg, rgba(15, 118, 110, 0.08), transparent 270px),
-    var(--bg);
+  background: #ffffff;
   color: var(--text);
 }
 
@@ -77,14 +58,13 @@ a {
   top: 0;
   z-index: 20;
   display: grid;
-  grid-template-columns: minmax(190px, 260px) minmax(240px, 1fr) 44px;
+  grid-template-columns: minmax(190px, 260px) minmax(240px, 1fr) auto;
   gap: 16px;
   align-items: center;
   height: var(--header-h);
   padding: 12px 28px;
   border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
-  backdrop-filter: blur(18px);
+  background: #ffffff;
 }
 
 .brand {
@@ -171,6 +151,30 @@ a {
 .icon-button:hover {
   border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
   color: var(--accent-strong);
+}
+
+.feedback-entry {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 92px;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.feedback-entry:hover {
+  background: var(--accent-strong);
+}
+
+.feedback-entry svg {
+  width: 18px;
+  height: 18px;
 }
 
 .icon-button svg {
@@ -540,6 +544,139 @@ h1 {
   pointer-events: none;
 }
 
+.report-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #ffffff;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.report-button:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  color: var(--accent-strong);
+}
+
+.report-button svg {
+  width: 15px;
+  height: 15px;
+}
+
+.feedback-dialog {
+  width: min(560px, calc(100vw - 28px));
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #ffffff;
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.feedback-dialog::backdrop {
+  background: rgba(28, 36, 48, 0.28);
+}
+
+.feedback-panel {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+}
+
+.feedback-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.feedback-head h2 {
+  margin: 0;
+  font-size: 21px;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+}
+
+.field span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #ffffff;
+  color: var(--text);
+  outline: none;
+}
+
+.field input,
+.field select {
+  height: 42px;
+  padding: 0 11px;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 118px;
+  padding: 10px 11px;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: color-mix(in srgb, var(--accent) 70%, var(--line));
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.feedback-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.primary-button,
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 8px 13px;
+  border-radius: var(--radius);
+  font-weight: 700;
+}
+
+.primary-button {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.secondary-button {
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--muted);
+}
+
+.primary-button svg,
+.secondary-button svg {
+  width: 16px;
+  height: 16px;
+}
+
 .status {
   color: var(--muted);
   font-size: 12px;
@@ -583,7 +720,7 @@ h1 {
 
 @media (max-width: 980px) {
   .topbar {
-    grid-template-columns: minmax(160px, 1fr) 44px;
+    grid-template-columns: minmax(160px, 1fr) auto;
     height: auto;
   }
 

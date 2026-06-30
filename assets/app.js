@@ -1,3 +1,5 @@
+const feedbackIssueUrl = "https://github.com/Tamako325/nav-tamako/issues/new";
+
 const categories = [
   { id: "all", name: "全部工具", icon: "layout-grid" },
   { id: "document", name: "PDF 文档", icon: "file-text" },
@@ -67,8 +69,15 @@ const elements = {
   categoryCount: document.querySelector("#categoryCount"),
   favoriteCount: document.querySelector("#favoriteCount"),
   activeMeta: document.querySelector("#activeMeta"),
-  themeToggle: document.querySelector("#themeToggle"),
   segments: Array.from(document.querySelectorAll(".segment")),
+  feedbackOpen: document.querySelector("#feedbackOpen"),
+  feedbackClose: document.querySelector("#feedbackClose"),
+  feedbackCancel: document.querySelector("#feedbackCancel"),
+  feedbackDialog: document.querySelector("#feedbackDialog"),
+  feedbackForm: document.querySelector("#feedbackForm"),
+  feedbackType: document.querySelector("#feedbackType"),
+  feedbackTarget: document.querySelector("#feedbackTarget"),
+  feedbackDetail: document.querySelector("#feedbackDetail"),
 };
 
 function escapeHtml(value) {
@@ -196,7 +205,10 @@ function renderToolCard(tool) {
           <span>${available ? "打开" : "待补充"}</span>
           <i data-lucide="${available ? "external-link" : "circle-dashed"}" aria-hidden="true"></i>
         </a>
-        <span class="status ${available ? "" : "empty"}">${available ? "可访问" : "未配置"}</span>
+        <button class="report-button" type="button" data-report="${escapeHtml(tool.name)}">
+          <i data-lucide="flag" aria-hidden="true"></i>
+          <span>反馈</span>
+        </button>
       </div>
     </article>
   `;
@@ -230,6 +242,47 @@ function render() {
   refreshIcons();
 }
 
+function openFeedback(target = "") {
+  elements.feedbackTarget.value = target;
+  elements.feedbackType.value = target ? "工具打不开" : elements.feedbackType.value;
+  if (typeof elements.feedbackDialog.showModal === "function") {
+    elements.feedbackDialog.showModal();
+  } else {
+    elements.feedbackDialog.setAttribute("open", "");
+  }
+  elements.feedbackTarget.focus();
+}
+
+function closeFeedback() {
+  elements.feedbackDialog.close();
+}
+
+function submitFeedback() {
+  const type = elements.feedbackType.value.trim();
+  const target = elements.feedbackTarget.value.trim() || "未填写";
+  const detail = elements.feedbackDetail.value.trim() || "未填写";
+  const title = `[${type}] ${target}`;
+  const body = [
+    "## 反馈类型",
+    type,
+    "",
+    "## 相关工具或功能",
+    target,
+    "",
+    "## 详细说明",
+    detail,
+    "",
+    "## 页面地址",
+    window.location.href,
+  ].join("\n");
+
+  const url = new URL(feedbackIssueUrl);
+  url.searchParams.set("title", title);
+  url.searchParams.set("body", body);
+  window.open(url.toString(), "_blank", "noopener,noreferrer");
+  closeFeedback();
+}
+
 function bindEvents() {
   elements.categoryNav.addEventListener("click", (event) => {
     const button = event.target.closest("[data-category]");
@@ -239,16 +292,23 @@ function bindEvents() {
   });
 
   elements.sections.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-favorite]");
-    if (!button) return;
-    const id = button.dataset.favorite;
-    if (state.favorites.has(id)) {
-      state.favorites.delete(id);
-    } else {
-      state.favorites.add(id);
+    const favoriteButton = event.target.closest("[data-favorite]");
+    if (favoriteButton) {
+      const id = favoriteButton.dataset.favorite;
+      if (state.favorites.has(id)) {
+        state.favorites.delete(id);
+      } else {
+        state.favorites.add(id);
+      }
+      saveFavorites();
+      render();
+      return;
     }
-    saveFavorites();
-    render();
+
+    const reportButton = event.target.closest("[data-report]");
+    if (reportButton) {
+      openFeedback(reportButton.dataset.report);
+    }
   });
 
   elements.searchInput.addEventListener("input", (event) => {
@@ -269,23 +329,17 @@ function bindEvents() {
     });
   });
 
-  elements.themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    const dark = document.body.classList.contains("dark");
-    localStorage.setItem("nav:theme", dark ? "dark" : "light");
-    elements.themeToggle.innerHTML = `<i data-lucide="${dark ? "sun" : "moon"}"></i>`;
-    refreshIcons();
+  elements.feedbackOpen.addEventListener("click", () => openFeedback());
+  elements.feedbackClose.addEventListener("click", closeFeedback);
+  elements.feedbackCancel.addEventListener("click", closeFeedback);
+  elements.feedbackDialog.addEventListener("click", (event) => {
+    if (event.target === elements.feedbackDialog) closeFeedback();
+  });
+  elements.feedbackForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    submitFeedback();
   });
 }
 
-function initTheme() {
-  const saved = localStorage.getItem("nav:theme");
-  const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
-  const dark = saved ? saved === "dark" : prefersDark;
-  document.body.classList.toggle("dark", dark);
-  elements.themeToggle.innerHTML = `<i data-lucide="${dark ? "sun" : "moon"}"></i>`;
-}
-
-initTheme();
 bindEvents();
 render();

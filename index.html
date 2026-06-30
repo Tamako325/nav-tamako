@@ -22,8 +22,9 @@
           <input id="searchInput" type="search" placeholder="搜索工具、标签或用途" autocomplete="off" />
         </div>
 
-        <button class="icon-button" id="themeToggle" type="button" aria-label="切换主题">
-          <i data-lucide="moon"></i>
+        <button class="feedback-entry" id="feedbackOpen" type="button">
+          <i data-lucide="message-square-plus" aria-hidden="true"></i>
+          <span>反馈</span>
         </button>
       </header>
 
@@ -74,6 +75,48 @@
         </main>
       </div>
     </div>
+
+    <dialog class="feedback-dialog" id="feedbackDialog">
+      <form class="feedback-panel" id="feedbackForm" method="dialog">
+        <div class="feedback-head">
+          <div>
+            <p class="eyebrow">Feedback</p>
+            <h2>提交反馈</h2>
+          </div>
+          <button class="icon-button" id="feedbackClose" type="button" aria-label="关闭反馈窗口">
+            <i data-lucide="x" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <label class="field">
+          <span>反馈类型</span>
+          <select id="feedbackType">
+            <option value="工具打不开">工具打不开 / 无法正常使用</option>
+            <option value="新增工具">想要新增某个小工具</option>
+            <option value="功能建议">网站功能建议</option>
+            <option value="其他问题">其他问题</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>相关工具或功能</span>
+          <input id="feedbackTarget" type="text" placeholder="例如：iLovePDF、图片压缩、二维码生成" />
+        </label>
+
+        <label class="field">
+          <span>详细说明</span>
+          <textarea id="feedbackDetail" rows="5" placeholder="请说明打不开的现象、希望新增的工具链接，或你想要的功能。"></textarea>
+        </label>
+
+        <div class="feedback-actions">
+          <button class="secondary-button" id="feedbackCancel" type="button">取消</button>
+          <button class="primary-button" type="submit">
+            <i data-lucide="send" aria-hidden="true"></i>
+            <span>提交到 GitHub</span>
+          </button>
+        </div>
+      </form>
+    </dialog>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="./assets/app.js"></script>
