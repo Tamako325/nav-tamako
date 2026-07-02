@@ -8,7 +8,12 @@
   </head>
   <body>
     <div class="app">
-      <header class="topbar">
+      <aside class="sidebar" aria-label="站点导航">
+        <button class="feedback-entry" id="feedbackOpen" type="button">
+          <i data-lucide="message-square-plus" aria-hidden="true"></i>
+          <span>反馈</span>
+        </button>
+
         <a class="brand" href="./index.html" aria-label="小工具导航首页">
           <span class="brand-mark">N</span>
           <span>
@@ -17,24 +22,19 @@
           </span>
         </a>
 
-        <div class="search-wrap">
-          <i data-lucide="search" aria-hidden="true"></i>
-          <input id="searchInput" type="search" placeholder="搜索工具、标签或用途" autocomplete="off" />
-        </div>
-
-        <button class="feedback-entry" id="feedbackOpen" type="button">
-          <i data-lucide="message-square-plus" aria-hidden="true"></i>
-          <span>反馈</span>
-        </button>
-      </header>
+        <div class="side-title">分类</div>
+        <nav id="categoryNav" class="category-nav"></nav>
+      </aside>
 
       <div class="layout">
-        <aside class="sidebar" aria-label="工具分类">
-          <div class="side-title">分类</div>
-          <nav id="categoryNav" class="category-nav"></nav>
-        </aside>
-
         <main class="content">
+          <header class="topbar">
+            <div class="search-wrap">
+              <i data-lucide="search" aria-hidden="true"></i>
+              <input id="searchInput" type="search" placeholder="搜索工具、标签或用途" autocomplete="off" />
+            </div>
+          </header>
+
           <section class="summary">
             <div>
               <p class="eyebrow">Toolkit</p>
